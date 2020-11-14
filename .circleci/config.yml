@@ -1,0 +1,39 @@
+version: 2.1
+jobs:
+  prebuild:
+    working_directory: ~/Imagen
+    machine: # executor type
+      image: ubuntu-1604:201903-01 # # recommended linux image - includes Ubuntu 16.04, docker 18.09.3, docker-compose 1.23.1
+    steps:
+      - checkout
+      - run:
+          name: "Login ECR"
+          command: |
+            $(aws ecr get-login --no-include-email --region us-west-2)
+      - run:
+          name: "Build Image"
+          command: |
+            cd Imagen
+            docker build -t nginx-elmer-trambo:${CIRCLE_SHA1} .
+      - run:
+          name: "Tag and push Image to repo"
+          command: |
+            docker tag nginx-elmer-trambo:${CIRCLE_SHA1} $Uri_ECR:${CIRCLE_SHA1}
+            docker push $Uri_ECR:${CIRCLE_SHA1}
+      - run:
+          name: "Create task definition and register in specific service"
+          command: |
+            aws ecs register-task-definition --family nuevaTask --container-definitions "[{\"name\":\"Nginx-Service\",\"portMappings\":[{\"hostPort\":80,\"protocol\":\"tcp\",\"containerPort\":80}],\"image\":\"$Uri_ECR:${CIRCLE_SHA1}\",\"cpu\":10,\"memory\":300,\"essential\":true}]"
+      - run:
+          name: "Update service and attack new task definition"
+          command: |
+            aws ecs update-service --cluster $ClusterName --service $ServiceName --task-definition nuevaTask 
+      - run:
+          name: "Wait until service reach steady state"
+          command: |
+            aws ecs wait services-stable --cluster $ClusterName --services $ServiceName
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - prebuild
