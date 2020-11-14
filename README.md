@@ -1,7 +1,10 @@
 # Trambo-CircleCI
-Trambo, Marzo 26 2020
+Trambo, March 26 2020
 
-## Archivo .config/config.yml
+# CircleCI
+CircleCI it's a service used to create pipelines for CI/CD processes. This is is possible because CircleCI asks for permission to connect to our Github account and set up a webhook to a specific repository, there is how CircleCI detects when a commit is done in the repository. Then, CircleCI reads the .circleci/.config file and interprets to know what does it has to do.
+
+## File .config/config.yml
 This file contains the following blocks
 1. version
 Indicates the version of the config file
@@ -13,8 +16,7 @@ controll the execution flow of the jobs.
 ## jobs
 
 ### prebuild
-the following steps are needed in order to update a ECS service with
-new container.
+the following steps are needed in order to update a ECS service with new container.
 
 #### Steps
  - Login ECR
@@ -97,5 +99,6 @@ workflows:
             - prebuild
 
 ```
-
-
+![alt ](\Pictures\ss2.png)
+![alt ](\Pictures\workflow.png)
+![alt ](\Pictures\ss1.png)
