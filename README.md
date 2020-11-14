@@ -99,6 +99,6 @@ workflows:
             - prebuild
 
 ```
-![alt ](\Pictures\ss2.png)
-![alt ](\Pictures\workflow.png)
-![alt ](\Pictures\ss1.png)
+![alt ](./Pictures/ss2.png)
+![alt ](./Pictures/workflow.png)
+![alt ](./Pictures/ss1.png)
