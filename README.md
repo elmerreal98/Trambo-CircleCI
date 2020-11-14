@@ -2,7 +2,7 @@
 Trambo, March 26 2020
 
 # CircleCI
-CircleCI it's a service used to create pipelines for CI/CD processes. This is is possible because CircleCI asks for permission to connect to our Github account and set up a webhook to a specific repository, there is how CircleCI detects when a commit is done in the repository. Then, CircleCI reads the .circleci/.config file and interprets to know what does it has to do.
+CircleCI it's a service used to create pipelines for CI/CD processes. This is is possible because CircleCI asks for permission to connect to our Github account and set up a webhook to a specific repository, there is how CircleCI detects when a commit is done in the repository. Then, CircleCI reads the .circleci/.config file and interprets to know what to do.
 
 ## File .config/config.yml
 This file contains the following blocks
